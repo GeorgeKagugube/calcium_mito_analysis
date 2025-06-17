@@ -45,17 +45,17 @@ plt.rcParams['lines.linewidth'] = 2
 hom1 = load_data(data_files1)
 rhod1 = load_data(path_to_rhod)
 
-# Check the header of the files here
-print (hom1.head())
-print (rhod1.head())
+## Check the header of the files here
+#print (hom1.head())
+#print (rhod1.head())
 
 ## Insert time in ms at the first colum here
 hom1 = cleanVarNames(insertTime(hom1)) 
 rhod1 = cleanVarNames(insertTime(rhod1))
 
 ## Check the tope five rows of the data frame 
-print (hom1.head())
-print (rhod1.head())
+#print (hom1.head())
+#print (rhod1.head())
 
 ## Visualise a few variables here 
 time, trace1, trace2 =  hom1['Time'], hom1['Mean Intensity '], hom1['Mean Intensity .1']
@@ -65,5 +65,13 @@ rhod_1, rhod_2 = rhod1['490/10(466.1) Mean Intensity '], rhod1['490/10(466.1) Me
 plot_fura2_rhodamine(time, trace1, rhod_1)
 
 ## Analyse the calcuim trace signal here 
-stim_regions = [(0,200),(250,1200)]
-analyze_all_cells(hom1, stim_regions = stim_regions, plot_each = True)
+stim_regions = [(0,150),(200,600), ]
+summary_results = analyze_all_cells(hom1, stim_regions = stim_regions, plot_each = False)
+fdata = pd.DataFrame(summary_results)
+print(fdata.head(200))
+
+## Export the dataframe for downstrem analysis in r.
+## Ask the user to enter a file name here 
+fname = input('Enter the name that you wish to save the file as here: ')
+
+fdata.to_csv(f'{output_dir}/{fname}.csv')
