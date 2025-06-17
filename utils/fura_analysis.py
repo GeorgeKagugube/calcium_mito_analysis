@@ -1,3 +1,4 @@
+#!/Users/gwk/anaconda3/bin/python3
 # --- Step 2: Analyze a single trace with multiple peaks ---
 def analyze_single_trace(time, trace, stim_regions=None, plot=True):
     """ Analyze a single calcium trace to extract peak characteristics and other metrics."

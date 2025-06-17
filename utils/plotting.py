@@ -1,4 +1,4 @@
-#!
+#!/Users/gwk/anaconda3/bin/python3
 
 def plot_fura2_rhodamine(time, fura2_trace,fura2_trace2, rhodamine_trace,rhodamine_trace2, position='upper left'):
     """ Plot Fura-2 AM and Rhodamine 123 traces on the same figure with dual y-axes.
