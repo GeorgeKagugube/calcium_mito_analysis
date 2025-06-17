@@ -1,4 +1,23 @@
-#!/Users/gwk/anaconda3/bin/python3
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks, savgol_filter
+from scipy.integrate import simpson
+from scipy.optimize import curve_fit, OptimizeWarning
+import seaborn as sns
+import warnings
+
+# Set plotting style
+sns.set_theme(style='whitegrid', palette='muted')
+# Suppress warnings from scipy.optimize
+warnings.simplefilter('ignore', OptimizeWarning)
+# Set default figure size
+plt.rcParams['figure.figsize'] = (10, 6)    
+# Set default font size
+plt.rcParams['font.size'] = 12  
+# Set default line width
+plt.rcParams['lines.linewidth'] = 2
+
 # --- Step 2: Analyze a single trace with multiple peaks ---
 def analyze_single_trace(time, trace, stim_regions=None, plot=True):
     """ Analyze a single calcium trace to extract peak characteristics and other metrics."
@@ -103,7 +122,7 @@ def analyze_single_trace(time, trace, stim_regions=None, plot=True):
                         decay_tau = popt[1]
                 except (RuntimeError, ValueError):
                     pass
-    snr = delta_ca / noise_std if noise_std else np.nan
+        snr = delta_ca / noise_std if noise_std else np.nan
 
         duration = np.nan
         max_upstroke = np.nan
@@ -133,35 +152,35 @@ def analyze_single_trace(time, trace, stim_regions=None, plot=True):
             if peak_pos + 10 < len(slopes):
                 repolarisation_slope = np.mean(slopes[peak_pos:peak_pos + 10])
 
-        result = {
-            'Peak_Index': peak_idx,
-            'Peak_Time': peak_time,
-            'Peak': peak,
-            'Delta_Ca': delta_ca,
-            'Time_to_Peak': time_to_peak,
-            'AUC': auc,
-            'Decay_Tau': decay_tau,
-            'SNR': snr,
-            'Duration': duration,
-            'Max_Upstroke': max_upstroke,
-            'Max_Downstroke': max_downstroke,
-            'Repolarisation_Slope': repolarisation_slope
-        }
-        results.append(result)
-    
+            result = {
+                'Peak_Index': peak_idx,
+                'Peak_Time': peak_time,
+                'Peak': peak,
+                'Delta_Ca': delta_ca,
+                'Time_to_Peak': time_to_peak,
+                'AUC': auc,
+                'Decay_Tau': decay_tau,
+                'SNR': snr,
+                'Duration': duration,
+                'Max_Upstroke': max_upstroke,
+                'Max_Downstroke': max_downstroke,
+                'Repolarisation_Slope': repolarisation_slope
+            }
+            results.append(result)
+
             if plot:
-            plt.figure(figsize=(10, 4))
-            plt.plot(time, trace, label='Calcium Trace')
-            plt.axhline(baseline, color='gray', linestyle='--', label='Baseline')
-            plt.scatter(time[peak_idx], peak, color='red', label='Peak')
-            plt.axvspan(stim_start, stim_end, color='yellow', alpha=0.2, label='Stimulus Region')
-            plt.xlabel('Time (s)')
-            plt.ylabel('Fura-2 Ratio')
-            plt.title(f'Peak {i+1} Analysis')
-            plt.legend()
-            plt.grid(True)
-            plt.tight_layout()
-            plt.show()
+                plt.figure(figsize=(10, 4))
+                plt.plot(time, trace, label='Calcium Trace')
+                plt.axhline(baseline, color='gray', linestyle='--', label='Baseline')
+                plt.scatter(time[peak_idx], peak, color='red', label='Peak')
+                plt.axvspan(stim_start, stim_end, color='yellow', alpha=0.2, label='Stimulus Region')
+                plt.xlabel('Time (s)')
+                plt.ylabel('Fura-2 Ratio')
+                plt.title(f'Peak {i+1} Analysis')
+                plt.legend()
+                plt.grid(True)
+                plt.tight_layout()
+                plt.show()
 
     return pd.DataFrame(results)
 

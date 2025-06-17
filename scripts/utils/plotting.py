@@ -1,6 +1,7 @@
-#!/Users/gwk/anaconda3/bin/python3
 
-def plot_fura2_rhodamine(time, fura2_trace,fura2_trace2, rhodamine_trace,rhodamine_trace2, position='upper left'):
+import matplotlib.pyplot as plt
+
+def plot_fura2_rhodamine(time, fura2_trace, rhodamine_trace, position='upper left'):
     """ Plot Fura-2 AM and Rhodamine 123 traces on the same figure with dual y-axes.
     Parameters:
     time (array-like): Time points for the x-axis.
@@ -14,7 +15,6 @@ def plot_fura2_rhodamine(time, fura2_trace,fura2_trace2, rhodamine_trace,rhodami
 
     # Plot Fura-2 AM on the left y-axis
     ax1.plot(time, fura2_trace, color='blue', label='Fura-2 AM (Ca²⁺)', linestyle='-.')
-    ax1.plot(time, fura2_trace2, color='black', label='Fura-2 AM (Ca²⁺)', linestyle='-.')
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('Fura-2 AM Ratio (Ca²⁺)', color='black')
     ax1.tick_params(axis='y', labelcolor='black')
@@ -22,8 +22,7 @@ def plot_fura2_rhodamine(time, fura2_trace,fura2_trace2, rhodamine_trace,rhodami
 
     # Create a second y-axis for Rhodamine 123
     ax2 = ax1.twinx()
-    ax2.plot(time, rhodamine_trace, color='blue', label='Rhodamine 123 (ΔΨm)')
-    ax2.plot(time, rhodamine_trace2, color='black', label='Rhodamine 123 (ΔΨm)')
+    ax2.plot(time, rhodamine_trace, color='black', label='Rhodamine 123 (ΔΨm)')
     ax2.set_ylabel('Rhodamine 123 (ΔΨm)', color='black')
     ax2.tick_params(axis='y', labelcolor='black')
 
@@ -33,7 +32,7 @@ def plot_fura2_rhodamine(time, fura2_trace,fura2_trace2, rhodamine_trace,rhodami
     lines_2, labels_2 = ax2.get_legend_handles_labels()
     ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc=position)
 
-    plt.grid(True)
+    plt.grid(False)
     plt.tight_layout()
-    plt.savefig(path+'/calcium_rhodamine123_mut.png')
+    #plt.savefig(path+'/calcium_rhodamine123_mut.png')
     plt.show()

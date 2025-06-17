@@ -1,5 +1,4 @@
-#!/Users/gwk/anaconda3/bin/python3
-
+import pandas as pd
 #Load, Save and preprocess data 
 
 def load_data(file_path):
@@ -48,7 +47,8 @@ def insertTime(data):
 
     if 'Time' in data.columns:
         data = data[['Time'] + [col for col in data.columns if col != 'Time']]
-    else:        print("Failed to insert 'Time' column.")
+    else:        
+        print("Failed to insert 'Time' column.")
         return data
     print("Column 'Time' inserted successfully, retun Data Frame object")   
 
