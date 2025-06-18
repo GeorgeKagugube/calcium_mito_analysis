@@ -23,8 +23,8 @@ from pathlib import Path
 
 ## Import own written functions needed in the analysis of the data
 output_dir = Path('/Users/gwk/Desktop/Bioinformatics/calcium_mito_analysis/results')
-data_files1 = Path('/Users/gwk/Desktop/Bioinformatics/calcium_mito_analysis/data/Platting_1/csv_files/Day1Recording_M3_Hom_Fura_2Ratio.csv')
-path_to_rhod = Path('/Users/gwk/Desktop/Bioinformatics/calcium_mito_analysis/data/Platting_1/csv_files/Day1Recording_M3_Hom_rhod123.csv')
+data_files1 = Path('/Users/gwk/Desktop/Bioinformatics/calcium_mito_analysis/data/Platting_1/csv_files/Day1Recording_M2_Hom_Fura2Ratio003.csv')
+path_to_rhod = Path('/Users/gwk/Desktop/Bioinformatics/calcium_mito_analysis/data/Platting_1/csv_files/Day1Recording_M2_Hom_rhod123002.csv')
 
 from utils.io_utils import load_data, insertTime, cleanVarNames
 from utils.plotting import plot_fura2_rhodamine
@@ -34,6 +34,7 @@ from utils.fura_analysis import analyze_single_trace, analyze_all_cells
 sns.set_theme(style='whitegrid', palette='muted')
 # Suppress warnings from scipy.optimize
 warnings.simplefilter('ignore', OptimizeWarning)
+plt.rcParams["font.family"] = "DejaVu Sans"
 # Set default figure size
 plt.rcParams['figure.figsize'] = (10, 6)    
 # Set default font size
@@ -65,13 +66,12 @@ rhod_1, rhod_2 = rhod1['490/10(466.1) Mean Intensity '], rhod1['490/10(466.1) Me
 plot_fura2_rhodamine(time, trace1, rhod_1)
 
 ## Analyse the calcuim trace signal here 
-stim_regions = [(0,150),(200,600), ]
+stim_regions = [(0,150),(400,500),(550,800),(1000, 1020)]
 summary_results = analyze_all_cells(hom1, stim_regions = stim_regions, plot_each = False)
 fdata = pd.DataFrame(summary_results)
 print(fdata.head(200))
 
 ## Export the dataframe for downstrem analysis in r.
 ## Ask the user to enter a file name here 
-fname = input('Enter the name that you wish to save the file as here: ')
-
-fdata.to_csv(f'{output_dir}/{fname}.csv')
+#fname = input('Enter the name that you wish to save the file as here: ')
+#fdata.to_csv(f'{output_dir}/{fname}.csv')

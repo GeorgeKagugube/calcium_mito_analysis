@@ -63,7 +63,10 @@ def cleanVarNames(df):
     Returns:
     pd.DataFrame: DataFrame with cleaned variable names.
     """
+    ## Create a a copy of the datafrom here
+    data = df.copy()
+
     # Remove unwanted characters from column names
-    df.drop([var for var in df.columns if var[0] == 'U'],axis = 1, inplace = True)
-    df.drop(['Frame','Time (ms)'], axis=1, inplace=True)
-    return df
+    data.drop([var for var in data.columns if var[0] == 'U'],axis = 1, inplace = True)
+    data.drop(['Frame','Time (ms)'], axis=1, inplace=True)
+    return data

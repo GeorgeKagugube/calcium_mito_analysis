@@ -11,6 +11,7 @@ import warnings
 sns.set_theme(style='whitegrid', palette='muted')
 # Suppress warnings from scipy.optimize
 warnings.simplefilter('ignore', OptimizeWarning)
+plt.rcParams["font.family"] = "DejaVu Sans"
 # Set default figure size
 plt.rcParams['figure.figsize'] = (10, 6)    
 # Set default font size

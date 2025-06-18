@@ -1,5 +1,16 @@
 
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set plotting style
+sns.set_theme(style='whitegrid', palette='muted')
+plt.rcParams["font.family"] = "DejaVu Sans"
+# Set default figure size
+plt.rcParams['figure.figsize'] = (10, 6)    
+# Set default font size
+plt.rcParams['font.size'] = 12  
+# Set default line width
+plt.rcParams['lines.linewidth'] = 2
 
 def plot_fura2_rhodamine(time, fura2_trace, rhodamine_trace, position='upper left'):
     """ Plot Fura-2 AM and Rhodamine 123 traces on the same figure with dual y-axes.
