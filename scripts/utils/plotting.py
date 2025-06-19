@@ -8,9 +8,9 @@ plt.rcParams["font.family"] = "DejaVu Sans"
 # Set default figure size
 plt.rcParams['figure.figsize'] = (10, 6)    
 # Set default font size
-plt.rcParams['font.size'] = 12  
+plt.rcParams['font.size'] = 15  
 # Set default line width
-plt.rcParams['lines.linewidth'] = 2
+plt.rcParams['lines.linewidth'] = 2.5
 
 def plot_fura2_rhodamine(time, fura2_trace, rhodamine_trace, position='upper left'):
     """ Plot Fura-2 AM and Rhodamine 123 traces on the same figure with dual y-axes.
@@ -25,7 +25,7 @@ def plot_fura2_rhodamine(time, fura2_trace, rhodamine_trace, position='upper lef
     fig, ax1 = plt.subplots(figsize=(7, 5))
 
     # Plot Fura-2 AM on the left y-axis
-    ax1.plot(time, fura2_trace, color='blue', label='Fura-2 AM (Ca²⁺)', linestyle='-.')
+    ax1.plot(time, fura2_trace, color='blue', label='Fura-2 AM (Ca²⁺)', linestyle='-')
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('Fura-2 AM Ratio (Ca²⁺)', color='black')
     ax1.tick_params(axis='y', labelcolor='black')

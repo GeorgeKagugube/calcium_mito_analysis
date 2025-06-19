@@ -21,7 +21,8 @@ plt.rcParams['lines.linewidth'] = 2
 
 # --- Step 2: Analyze a single trace with multiple peaks ---
 def analyze_single_trace(time, trace, stim_regions=None, plot=True):
-    """ Analyze a single calcium trace to extract peak characteristics and other metrics."
+    """ 
+    Analyze a single calcium trace to extract peak characteristics and other metrics
     
     Parameters:
     time (array-like): Time points corresponding to the calcium trace.
@@ -99,7 +100,7 @@ def analyze_single_trace(time, trace, stim_regions=None, plot=True):
             stim_start, stim_end = region
         else:
             stim_start = time[max(0, peak_idx - 10)]
-            #stim_end = time[min(len(time)-1, peak_idx + 30)]
+            stim_end = time[min(len(time)-1, peak_idx + 30)]
             stim_end = time[min(len(time)-1, peak_idx)]
 
         stim_mask = (time >= stim_start) & (time <= stim_end)

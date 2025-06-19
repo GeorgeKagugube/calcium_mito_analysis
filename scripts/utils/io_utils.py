@@ -70,3 +70,4 @@ def cleanVarNames(df):
     data.drop([var for var in data.columns if var[0] == 'U'],axis = 1, inplace = True)
     data.drop(['Frame','Time (ms)'], axis=1, inplace=True)
     return data
+
