@@ -9,13 +9,17 @@ import warnings
 
 # Set plotting style
 sns.set_theme(style='whitegrid', palette='muted')
+
 # Suppress warnings from scipy.optimize
 warnings.simplefilter('ignore', OptimizeWarning)
 plt.rcParams["font.family"] = "DejaVu Sans"
+
 # Set default figure size
-plt.rcParams['figure.figsize'] = (10, 6)    
+plt.rcParams['figure.figsize'] = (10, 6)  
+
 # Set default font size
 plt.rcParams['font.size'] = 12  
+
 # Set default line width
 plt.rcParams['lines.linewidth'] = 2
 
@@ -92,7 +96,7 @@ def analyze_single_trace(time, trace, stim_regions=None, plot=True):
     for i, peak_idx in enumerate(peaks):
         peak_time = time[peak_idx]
         peak = trace[peak_idx]
-        delta_ca = peak - baseline/baseline
+        delta_ca = (peak - baseline)/baseline
         time_to_peak = peak_time - time[0]
 
         if stim_regions is not None:
@@ -101,7 +105,7 @@ def analyze_single_trace(time, trace, stim_regions=None, plot=True):
         else:
             stim_start = time[max(0, peak_idx - 10)]
             stim_end = time[min(len(time)-1, peak_idx + 30)]
-            stim_end = time[min(len(time)-1, peak_idx)]
+            #stim_end = time[min(len(time)-1, peak_idx)]
 
         stim_mask = (time >= stim_start) & (time <= stim_end)
         auc = simpson(trace[stim_mask] - baseline, dx=(time[1] - time[0]))
@@ -217,7 +221,7 @@ def analyze_all_cells(df, stim_regions=None, plot_each=False):
     - 'Max_Upstroke': Maximum upstroke slope before the peak
     - 'Max_Downstroke': Maximum downstroke slope after the peak
     - 'Repolarisation_Slope': Mean slope after the peak over a specified number of points
-    The function is intended to be used in a Jupyter notebook or similar environment where data visualization is important for analysis.
+    The function can be used in a Jupyter notebook or similar environment where data visualization is important for analysis.
     The function can be extended or modified to include additional metrics or analysis steps as needed for specific research questions or experimental designs.
     The function uses several libraries including pandas, numpy, matplotlib, scipy, and seaborn for data manipulation, numerical analysis, and plotting.
     The function is designed to be flexible and can handle different types of calcium imaging data, making it suitable for various experimental setups. 
