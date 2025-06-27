@@ -29,7 +29,7 @@ data_summary <- function(data, varname, groupnames){
 }
 
 ## Load the data to be analysed here
-cal_dynamics <- read.csv("neuronal_calcium_dynamics.csv")
+cal_dynamics <- read.csv("calcium_dynamic.csv")
 
 ## explore the data here 
 head(cal_dynamics)
@@ -43,11 +43,13 @@ cal_dynamics$Stimulant <- as.factor(cal_dynamics$Stimulant)
 
 ## Organise teh levels such that WT alway appears before the Homs
 cal_dynamics$Genotype <- ordered(cal_dynamics$Genotype,
-                                 levels = c('WT', 'Hom'))
+                                 levels = c('WT','Het' ,'Hom'))
 
 ## Split the data to see how it looks when seperated here
 cal <- cal_dynamics %>%
-  filter(Stimulant == 'Glutamate')
+  filter(Stimulant == 'ATP') 
+
+attach(cal)
 
 ## View a quick summary of the filtred data
 summary(cal)
@@ -72,7 +74,7 @@ shapiro.test(cal$Peak)
 
 ## Add p-value comparing groups
 ## Specify the comparisons to be made
-my_comparisons <- list(c('WT', "Hom"))
+my_comparisons <- list(c('WT', 'Het'),c('WT',"Hom"),c('Het','Hom'))
 
 ## Data visualisation using a dotplot
 # Option 1
@@ -86,21 +88,21 @@ my_comparisons <- list(c('WT', "Hom"))
 
 # Option 2
 ggviolin(cal, x = "Genotype", y = "Peak", fill = "Genotype",
-         palette = c("#00AFBB", "#E7B800"),
+         palette = c("#00AFBB", "#E7B800", "#eeFF11"),
          #add = "boxplot", add.params = list(fill = "white"),
          add = c("jitter", "mean_sd"),
          xlab = 'Genotype', ylab = 'Fura-2 AM Ratio (abu)',
          font.label = list(size = 14, face = 'bold', color = 'black')) +
-  stat_compare_means(comparisons = my_comparisons, label = "p.signif", label.y = 2.5) #+ # Add significance levels
+  stat_compare_means(comparisons = my_comparisons, label = "p.signif", label.y = c(1.2,1.35,1.50)) #+ # Add significance levels
   #stat_compare_means(label.y = 2.7)                                      # Add global the p-value 
 
 ## Run a one way anova here 
 # Compute the analysis of variance
-res.aov <- aov(Duration ~ Genotype, data = cal)
+res.aov <- aov(Delta_Ca ~ Genotype, data = cal)
 
 # Summary of the analysis
 summary(res.aov)
-#TukeyHSD(res.aov)
+TukeyHSD(res.aov)
 
 ## Computing a test
 t.test(Duration ~ Genotype, data = cal)

@@ -48,7 +48,6 @@ rhod1 = cleanVarNames(insertTime(rhod1))
 ## for some datasets, the coverslip moved during imaging,
 ## In order to remove these artifacts, data in the ranges where this happened were set to the baseline
 
-
 ## Check the tope five rows of the data frame 
 #print (hom1)
 #print (rhod1.head())
@@ -75,7 +74,6 @@ plot_fura2_rhodamine(time, trace1, rhod_1)
 
 
 ## Analyse the calcuim trace signal here 
-#stim_regions = [(350,850)]#,(600,800)]#,(550,720),(750, 840)]
 summary_results = batch_process_csv(df, plot_scaling = True, 
                                 auto_window=True,
                                window_size=30,  # seconds
